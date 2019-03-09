@@ -1,38 +1,37 @@
 package br.com.creativedrivebrasil.usermicroservicer.services.impl;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import br.com.creativedrivebrasil.usermicroservicer.model.User;
-import br.com.creativedrivebrasil.usermicroservicer.model.filter.GetAllUserFilter;
+import br.com.creativedrivebrasil.usermicroservicer.dto.UserDTO;
+import br.com.creativedrivebrasil.usermicroservicer.dto.UserPageDTO;
+import br.com.creativedrivebrasil.usermicroservicer.model.filters.GetAllUserFilter;
 import br.com.creativedrivebrasil.usermicroservicer.services.api.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Override
-	public void create(User user) {
+	public void create(UserDTO user) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(User user) {
+	public void update(UserDTO user) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public User get(Long id) {
+	public UserDTO get(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<User> getAll(GetAllUserFilter getAllUserFilter) {
+	public UserPageDTO getAll(GetAllUserFilter getAllUserFilter) {
 		// TODO Auto-generated method stub
-		return null;
+		return new UserPageDTO();
 	}
 
 	@Override

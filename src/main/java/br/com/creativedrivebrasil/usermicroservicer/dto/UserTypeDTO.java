@@ -1,13 +1,14 @@
-package br.com.creativedrivebrasil.usermicroservicer.model.filter;
+package br.com.creativedrivebrasil.usermicroservicer.dto;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum OrderType {
-	ASC,
-	DESC;
+public enum UserTypeDTO {
+	ADMIN,
+	USER;
 	
 	@JsonValue
 	public String getUserType() {
 		return this.name();
 	}
+	
 }

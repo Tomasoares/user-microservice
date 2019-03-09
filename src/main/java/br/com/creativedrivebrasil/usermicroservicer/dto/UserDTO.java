@@ -1,4 +1,4 @@
-package br.com.creativedrivebrasil.usermicroservicer.model;
+package br.com.creativedrivebrasil.usermicroservicer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User {
+public class UserDTO {
 
 	private Long id;
 	private String name;
@@ -19,7 +19,7 @@ public class User {
 	private String password;
 	private String address;
 	private String telephone;
-	private UserType type;
+	private UserTypeDTO type;
 	
 	
 }

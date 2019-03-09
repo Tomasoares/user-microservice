@@ -1,22 +1,21 @@
 package br.com.creativedrivebrasil.usermicroservicer.services.api;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
-import br.com.creativedrivebrasil.usermicroservicer.model.User;
-import br.com.creativedrivebrasil.usermicroservicer.model.filter.GetAllUserFilter;
+import br.com.creativedrivebrasil.usermicroservicer.dto.UserDTO;
+import br.com.creativedrivebrasil.usermicroservicer.dto.UserPageDTO;
+import br.com.creativedrivebrasil.usermicroservicer.model.filters.GetAllUserFilter;
 
 @Service
 public interface UserService {
 
-	void create(User user);
+	void create(UserDTO user);
 	
-	void update(User user);
+	void update(UserDTO user);
 	
-	User get(Long id);
+	UserDTO get(Long id);
 	
-	List<User> getAll(GetAllUserFilter getAllUserFilter);
+	UserPageDTO getAll(GetAllUserFilter getAllUserFilter);
 	
 	void delete(Long id);
 	
