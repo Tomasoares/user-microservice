@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.creativedrivebrasil</groupId>
-	<artifactId>user-microservicer</artifactId>
+	<artifactId>user-microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>user-microservicer</name>
+	<name>user-microservice</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
