@@ -91,10 +91,7 @@ class UserResourceTest {
 			
 			assertEquals("should've returned OK status,", OK, response.getStatusCode());
 			assertNotNull("response shouldn't be null,", response.getBody());
-			
-			if (response.getBody() != null) {
-				assertThat(response.getBody()).isEqualToComparingFieldByFieldRecursively(user);
-			}
+			assertThat(response.getBody()).isEqualToComparingFieldByFieldRecursively(user);
 		}
 
 		@Test

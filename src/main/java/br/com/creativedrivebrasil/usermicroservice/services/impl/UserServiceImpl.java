@@ -1,6 +1,8 @@
 package br.com.creativedrivebrasil.usermicroservice.services.impl;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,8 +56,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserPageDTO getAll(GetAllUserFilter getAllUserFilter) {
-		// TODO Auto-generated method stub
+	public UserPageDTO getAll(GetAllUserFilter filter) {
+		List<User> userList = this.repository.getAll(filter);
+		
+		UserPageDTO page = new UserPageDTO();
+		
+		page.setPageOffset(filter.getPageOffset());
+		page.setPageSize(filter.getPageSize());
+		page.setUsers(userList.stream().map(db -> new UserDTO(db.getId(),
+														      db.getName(),
+														      db.getEmail(),
+														      db.getPassword(),
+														      db.getAddress(),
+														      db.getTelephone(),
+															  UserUtils.getUserTypeDTO(db.getIdUserType()))).collect(Collectors.toList()));
+		
 		return new UserPageDTO();
 	}
 
