@@ -1,6 +1,7 @@
 package br.com.creativedrivebrasil.usermicroservicer.mongodb.documents;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Document
 public class User {
 
 	@Id
@@ -21,5 +23,6 @@ public class User {
 	private String password;
 	private String address;
 	private String telephone;
+	private Integer idUserType;
 	
 }

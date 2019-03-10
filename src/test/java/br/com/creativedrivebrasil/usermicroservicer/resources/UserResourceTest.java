@@ -15,7 +15,6 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,7 +26,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -126,10 +124,7 @@ class UserResourceTest {
 			
 			assertEquals("should've returned OK status,", OK, response.getStatusCode());
 			assertNotNull("response shouldn't be null,", response.getBody());
-			
-			if (response.getBody() != null) {
-				assertThat(response.getBody()).isEqualToComparingFieldByFieldRecursively(user);
-			}
+			assertThat(response.getBody()).isEqualToComparingFieldByFieldRecursively(user);
 		}
 
 		@Test
@@ -200,10 +195,7 @@ class UserResourceTest {
 			
 			assertEquals("should've returned OK status,", OK, response.getStatusCode());
 			assertNotNull("response shouldn't be null,", response.getBody());
-			
-			if (response.getBody() != null) {
-				assertThat(page).isEqualToComparingFieldByFieldRecursively(response.getBody());
-			}
+			assertThat(page).isEqualToComparingFieldByFieldRecursively(response.getBody());
 		}
 
 		@Test

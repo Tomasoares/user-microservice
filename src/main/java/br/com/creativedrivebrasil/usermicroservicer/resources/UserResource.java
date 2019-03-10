@@ -1,6 +1,5 @@
 package br.com.creativedrivebrasil.usermicroservicer.resources;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -29,12 +28,7 @@ public class UserResource {
 	
 	@PostMapping
 	public ResponseEntity<UserDTO> create(@RequestBody UserDTO user) {
-		if (user == null) {
-			return ResponseEntity.status(BAD_REQUEST).body(null);
-		}
-		
 		this.service.create(user);
-		
 		return ResponseEntity.status(OK).body(user);
 	}
 	
@@ -63,10 +57,6 @@ public class UserResource {
 	
 	@PutMapping("/{userId}")
 	public ResponseEntity<UserDTO> update(@RequestBody UserDTO user, @PathVariable("userId") Long userId) {
-		if (user == null) {
-			return ResponseEntity.status(NOT_FOUND).body(null); 
-		}
-		
 		user.setId(userId);
 		this.service.update(user);
 		
