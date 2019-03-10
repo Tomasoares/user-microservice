@@ -1,4 +1,4 @@
-package br.com.creativedrivebrasil.usermicroservicer.dto;
+package br.com.creativedrivebrasil.usermicroservicer.shared;
 
 import java.util.ArrayList;
 import java.util.List;

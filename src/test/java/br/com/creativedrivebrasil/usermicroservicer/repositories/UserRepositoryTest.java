@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.creativedrivebrasil.usermicroservicer.mongodb.documents.User;
 import br.com.creativedrivebrasil.usermicroservicer.mongodb.documents.UserType;
+import br.com.creativedrivebrasil.usermicroservicer.repositories.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,6 +1,6 @@
 package br.com.creativedrivebrasil.usermicroservicer.model.filters;
 
-import br.com.creativedrivebrasil.usermicroservicer.dto.UserTypeDTO;
+import br.com.creativedrivebrasil.usermicroservicer.shared.UserTypeDTO;
 import lombok.Getter;
 import lombok.Setter;
 

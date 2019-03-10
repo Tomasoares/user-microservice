@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpMethod.GET;
@@ -20,7 +21,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -31,12 +31,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.creativedrivebrasil.usermicroservicer.dto.UserDTO;
-import br.com.creativedrivebrasil.usermicroservicer.dto.UserPageDTO;
-import br.com.creativedrivebrasil.usermicroservicer.dto.UserTypeDTO;
 import br.com.creativedrivebrasil.usermicroservicer.model.filters.GetAllUserFilter;
 import br.com.creativedrivebrasil.usermicroservicer.model.filters.OrderType;
 import br.com.creativedrivebrasil.usermicroservicer.services.api.UserService;
+import br.com.creativedrivebrasil.usermicroservicer.shared.UserDTO;
+import br.com.creativedrivebrasil.usermicroservicer.shared.UserPageDTO;
+import br.com.creativedrivebrasil.usermicroservicer.shared.UserTypeDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -56,7 +56,7 @@ class UserResourceTest {
 		@Test
 		@DisplayName("when trying to retrieve successfully the pathVariable userId")
 		void testGetUserSuccessful() {
-			when(storeService.get(anyLong())).thenAnswer(a -> new UserDTO(a.getArgument(0), "", "", "", "", "", null));
+			when(storeService.get(anyString())).thenAnswer(a -> new UserDTO(a.getArgument(0), "", "", "", "", "", null));
 			
 			ResponseEntity<UserDTO> response = restTemplate.getForEntity("/users/1", UserDTO.class);
 			
@@ -67,7 +67,7 @@ class UserResourceTest {
 		@Test
 		@DisplayName("when trying to retrieve an unexisting user")
 		void testGetUserNotFound() {
-			when(storeService.get(anyLong())).thenAnswer(a -> null);
+			when(storeService.get(anyString())).thenAnswer(a -> null);
 			
 			ResponseEntity<UserDTO> response = restTemplate.getForEntity("/users/2", UserDTO.class);
 			
@@ -83,9 +83,9 @@ class UserResourceTest {
 		@Test
 		@DisplayName("when trying to sucessfully retrieve an User as the body of the request")
 		void testPostNewUser() {
-			doNothing().when(storeService).create(Mockito.any());
+			doNothing().when(storeService).save(any());
 			
-			UserDTO user = new UserDTO(1L, "tomas", "tomas@gmail.com", "123345", "address", "23467312", UserTypeDTO.ADMIN);
+			UserDTO user = new UserDTO("1", "tomas", "tomas@gmail.com", "123345", "address", "23467312", UserTypeDTO.ADMIN);
 			
 			ResponseEntity<UserDTO> response = restTemplate.postForEntity("/users", user, UserDTO.class);
 			
@@ -100,7 +100,7 @@ class UserResourceTest {
 		@Test
 		@DisplayName("when trying to create an unexisting user")
 		void testPostNullUser() {
-			doNothing().when(storeService).create(Mockito.any());
+			doNothing().when(storeService).save(any());
 			
 			ResponseEntity<UserDTO> response = restTemplate.postForEntity("/users", null, UserDTO.class);
 			
@@ -115,9 +115,9 @@ class UserResourceTest {
 		@Test
 		@DisplayName("when trying to sucessfully retrieve an User as the body of the request")
 		void testPutExistingUser() {
-			doNothing().when(storeService).update(Mockito.any());
+			doNothing().when(storeService).save(any());
 			
-			UserDTO user = new UserDTO(1L, "tomas", "tomas@gmail.com", "123345", "address", "23467312", UserTypeDTO.ADMIN);
+			UserDTO user = new UserDTO("1", "tomas", "tomas@gmail.com", "123345", "address", "23467312", UserTypeDTO.ADMIN);
 			HttpEntity<UserDTO> entity = new HttpEntity<UserDTO>(user);
 			
 			ResponseEntity<UserDTO> response = restTemplate.exchange("/users/1", PUT, entity, UserDTO.class);
@@ -130,7 +130,7 @@ class UserResourceTest {
 		@Test
 		@DisplayName("when trying to update a null user")
 		void testPutNullUser() {
-			doNothing().when(storeService).update(Mockito.any());
+			doNothing().when(storeService).save(any());
 
 			UserDTO user = null;
 			
@@ -145,11 +145,11 @@ class UserResourceTest {
 	class testeGetAll {
 		
 		@Test
-		@DisplayName("when trying to check if all parameters got successfully fulfilled")
+		@DisplayName("when trying to check if all parameters have been successfully fulfilled")
 		void testAppliedFilters() {
 			int[] checkParams = {0};
 			
-			when(storeService.getAll(Mockito.any(GetAllUserFilter.class))).thenAnswer(a -> {
+			when(storeService.getAll(any(GetAllUserFilter.class))).thenAnswer(a -> {
 				GetAllUserFilter user = a.getArgument(0);
 				if (user.address != null) checkParams[0]+=1;
 				if (user.email != null) checkParams[0]+=2;
@@ -186,10 +186,10 @@ class UserResourceTest {
 		@Test
 		@DisplayName("when trying to retrieve a list with some users")
 		void testFoundUser() {
-			UserPageDTO page = new UserPageDTO(Arrays.asList(new UserDTO(1L, "2", "3", "4", "5", "6", UserTypeDTO.ADMIN),
-															 new UserDTO(2L, "3", "4", "5", "6", "7", UserTypeDTO.ADMIN)), 1, 2);
+			UserPageDTO page = new UserPageDTO(Arrays.asList(new UserDTO("1", "2", "3", "4", "5", "6", UserTypeDTO.ADMIN),
+															 new UserDTO("2", "3", "4", "5", "6", "7", UserTypeDTO.ADMIN)), 1, 2);
 			
-			when(storeService.getAll(Mockito.any(GetAllUserFilter.class))).thenAnswer(a -> page);
+			when(storeService.getAll(any(GetAllUserFilter.class))).thenAnswer(a -> page);
 			
 			ResponseEntity<UserPageDTO> response = restTemplate.getForEntity("/users", UserPageDTO.class);
 			
@@ -201,7 +201,7 @@ class UserResourceTest {
 		@Test
 		@DisplayName("when trying to retrieve a list of users with no results")
 		void testNotFoundAnyUser() {
-			when(storeService.getAll(Mockito.any(GetAllUserFilter.class))).thenAnswer(a -> null);
+			when(storeService.getAll(any(GetAllUserFilter.class))).thenAnswer(a -> null);
 
 			ResponseEntity<UserPageDTO> response = restTemplate.getForEntity("/users", UserPageDTO.class);
 			

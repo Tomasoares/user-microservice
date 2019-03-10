@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.creativedrivebrasil.usermicroservicer.dto.UserDTO;
-import br.com.creativedrivebrasil.usermicroservicer.dto.UserPageDTO;
 import br.com.creativedrivebrasil.usermicroservicer.model.filters.GetAllUserFilter;
 import br.com.creativedrivebrasil.usermicroservicer.services.api.UserService;
+import br.com.creativedrivebrasil.usermicroservicer.shared.UserDTO;
+import br.com.creativedrivebrasil.usermicroservicer.shared.UserPageDTO;
 
 @RestController
 @RequestMapping("/users")
@@ -28,12 +28,12 @@ public class UserResource {
 	
 	@PostMapping
 	public ResponseEntity<UserDTO> create(@RequestBody UserDTO user) {
-		this.service.create(user);
+		this.service.save(user);
 		return ResponseEntity.status(OK).body(user);
 	}
 	
 	@GetMapping("/{userId}")
-	public ResponseEntity<UserDTO> get(@PathVariable("userId") Long userId) {
+	public ResponseEntity<UserDTO> get(@PathVariable("userId") String userId) {
 		
 		UserDTO user = this.service.get(userId);
 		
@@ -56,13 +56,11 @@ public class UserResource {
 	}
 	
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDTO> update(@RequestBody UserDTO user, @PathVariable("userId") Long userId) {
+	public ResponseEntity<UserDTO> update(@RequestBody UserDTO user, @PathVariable("userId") String userId) {
 		user.setId(userId);
-		this.service.update(user);
+		this.service.save(user);
 		
 		return ResponseEntity.status(OK).body(user); 
 	}
-	
-	
 	
 }
