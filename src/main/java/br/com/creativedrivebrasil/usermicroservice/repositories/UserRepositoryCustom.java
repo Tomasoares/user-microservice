@@ -7,6 +7,6 @@ import br.com.creativedrivebrasil.usermicroservice.mongodb.documents.User;
 
 public interface UserRepositoryCustom {
 	
-	List<User> getAll(GetAllUserFilter filter);
+	List<User> getPage(GetAllUserFilter filter);
 
 }

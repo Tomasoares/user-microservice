@@ -20,7 +20,7 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
     MongoTemplate mongoTemplate;
     
 	@Override
-	public List<User> getAll(GetAllUserFilter filter) {
+	public List<User> getPage(GetAllUserFilter filter) {
 		filter = initializeDefaultFiltering(filter);
 
 		Query query = new Query();

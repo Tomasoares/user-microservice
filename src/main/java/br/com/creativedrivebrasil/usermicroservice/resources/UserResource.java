@@ -4,7 +4,10 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,12 +28,6 @@ public class UserResource {
 
 	@Autowired
 	private UserService service;
-	
-	@PostMapping
-	public ResponseEntity<UserDTO> create(@RequestBody UserDTO user) {
-		this.service.save(user);
-		return ResponseEntity.status(OK).body(user);
-	}
 	
 	@GetMapping("/{userId}")
 	public ResponseEntity<UserDTO> get(@PathVariable("userId") String userId) {
@@ -54,7 +51,19 @@ public class UserResource {
 		
 		return ResponseEntity.status(OK).body(page); 
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@PostMapping
+	public ResponseEntity<UserDTO> create(@RequestBody UserDTO user) {
+		if (user.getId() != null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+		
+		this.service.save(user);
+		return ResponseEntity.status(OK).body(user);
+	}
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{userId}")
 	public ResponseEntity<UserDTO> update(@RequestBody UserDTO user, @PathVariable("userId") String userId) {
 		user.setId(userId);
@@ -62,5 +71,12 @@ public class UserResource {
 		
 		return ResponseEntity.status(OK).body(user); 
 	}
-	
+
+	@PreAuthorize("hasAnyRole('ADMIN')")
+	@DeleteMapping("/{userId}")
+	public ResponseEntity<UserDTO> delete(@PathVariable("userId") String userId) {
+		UserDTO user = this.service.get(userId);
+		this.service.delete(userId);
+		return ResponseEntity.status(OK).body(user);
+	}
 }

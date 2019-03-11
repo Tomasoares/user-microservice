@@ -6,4 +6,6 @@ import br.com.creativedrivebrasil.usermicroservice.mongodb.documents.User;
 
 public interface UserRepository extends MongoRepository<User, String>, UserRepositoryCustom {
     
+	User findByEmail(String email);
+	
 }

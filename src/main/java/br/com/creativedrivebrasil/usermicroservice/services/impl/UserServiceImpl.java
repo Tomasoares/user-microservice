@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.creativedrivebrasil.usermicroservice.model.filters.GetAllUserFilter;
@@ -20,18 +21,25 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository repository;
-
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Override
 	public void save(br.com.creativedrivebrasil.usermicroservice.shared.UserDTO user) {
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		
 		User dto = new User(user.getId(), 
 							user.getName(), 
 							user.getEmail(), 
-							user.getPassword(), 
+							encodedPassword, 
 							user.getAddress(), 
 							user.getTelephone(), 
 							UserUtils.getUserTypeId(user.getType()));
 		
 		this.repository.save(dto);
+		
+		user.setId(dto.getId());
 	}
 
 	@Override
@@ -57,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserPageDTO getAll(GetAllUserFilter filter) {
-		List<User> userList = this.repository.getAll(filter);
+		List<User> userList = this.repository.getPage(filter);
 		
 		UserPageDTO page = new UserPageDTO();
 		
@@ -71,7 +79,7 @@ public class UserServiceImpl implements UserService {
 														      db.getTelephone(),
 															  UserUtils.getUserTypeDTO(db.getIdUserType()))).collect(Collectors.toList()));
 		
-		return new UserPageDTO();
+		return page;
 	}
 
 	@Override

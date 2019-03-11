@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document
+@Document(value = "users")
 public class User {
 
 	@Id

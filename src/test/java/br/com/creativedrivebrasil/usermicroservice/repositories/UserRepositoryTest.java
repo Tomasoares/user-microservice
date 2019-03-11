@@ -203,7 +203,7 @@ public class UserRepositoryTest {
 		}
 		
 		private void testFilter(List<User> expectedList, GetAllUserFilter filter) {
-			List<User> all = repository.getAll(filter);
+			List<User> all = repository.getPage(filter);
 			
 			for (int i = 0; i < all.size(); i++) {
 				User expected = expectedList.get(i);
