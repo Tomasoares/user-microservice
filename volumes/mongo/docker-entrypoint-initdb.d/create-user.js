@@ -18,3 +18,14 @@ db.users.insert(
 		"idUserType": 1
 	}
 )
+
+db.users.insert(
+	{
+		"name": "Regular user",
+		"email": "regularuser@gmail.com",
+		"password": "$2a$10$hjqiJJUfcPK2i30aDMj2LeN4ewrTbFMwNjR/eQIxzVcJYB/p52XuS",
+		"address": "SC-401 B",
+		"telephone": "47468573427",
+		"idUserType": 2
+	}
+)
