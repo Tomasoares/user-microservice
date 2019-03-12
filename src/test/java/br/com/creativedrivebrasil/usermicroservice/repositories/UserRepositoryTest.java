@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.creativedrivebrasil.usermicroservice.model.filters.GetAllUserFilter;
@@ -28,6 +30,7 @@ import br.com.creativedrivebrasil.usermicroservice.shared.UserTypeDTO;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@TestPropertySource("classpath:application-test.properties")
 @DisplayName("When testing User Repository API resource")
 public class UserRepositoryTest {
 	

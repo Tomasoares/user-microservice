@@ -16,6 +16,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
+import static org.springframework.http.HttpStatus.UNSUPPORTED_MEDIA_TYPE;
 
 import java.util.Arrays;
 
@@ -23,12 +24,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.omg.CORBA.UNSUPPORTED_POLICY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -196,7 +199,7 @@ class UserResourceTest {
 
 			ResponseEntity<UserDTO> response = restWithAdminUser().postForEntity("/users", null, UserDTO.class);
 
-			assertEquals("should've returned BAD_REQUEST status,", BAD_REQUEST,
+			assertEquals("should've returned UNSUPPORTED_MEDIA_TYPE status,", UNSUPPORTED_MEDIA_TYPE,
 					response.getStatusCode());
 		}
 
