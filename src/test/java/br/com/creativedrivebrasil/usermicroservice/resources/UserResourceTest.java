@@ -24,15 +24,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.omg.CORBA.UNSUPPORTED_POLICY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -42,6 +41,7 @@ import br.com.creativedrivebrasil.usermicroservice.services.api.UserService;
 import br.com.creativedrivebrasil.usermicroservice.shared.UserDTO;
 import br.com.creativedrivebrasil.usermicroservice.shared.UserPageDTO;
 import br.com.creativedrivebrasil.usermicroservice.shared.UserTypeDTO;
+import br.com.creativedrivebrasil.usermicroservice.shared.config.SpringUser;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

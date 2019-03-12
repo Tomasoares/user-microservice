@@ -11,7 +11,8 @@ services:
           - "27017:27017"
         volumes:
           - ./volumes/mongo/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
-        container_name: "mongodb-user"
+        networks:
+          - lognet
             
     mongo-test:
         image: mongo:latest
@@ -23,17 +24,35 @@ services:
           - "27018:27017"
         volumes:
           - ./volumes/mongo-test/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
-        container_name: "mongodb-user-test"
+        networks:
+          - lognet
       
     mongo-express:
         image: mongo-express
         restart: always
         ports:
-          - 8081:8081
+          - "8081:8081"
         environment:
           ME_CONFIG_MONGODB_ADMINUSERNAME: root
           ME_CONFIG_MONGODB_ADMINPASSWORD: cr34t1v3dr1v3r
         restart: on-failure
         depends_on:
           - mongo
-        container_name: "mongo-express-user"
+        networks:
+          - lognet
+        
+    user-microservice:
+        restart: on-failure
+        build: .
+        ports:
+          - "8091:8091"
+        environment:
+            SPRING_DATA_MONGODB_URI: mongodb://creativedriver:cr34t1v3dr1v3r@mongo:27017/user-microservice
+        depends_on:
+          - mongo
+        networks:
+          - lognet
+          
+networks:
+    lognet:
+        driver: bridge
