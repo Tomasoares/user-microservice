@@ -12,7 +12,7 @@ services:
         volumes:
           - ./volumes/mongo/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
         networks:
-          - user-microservice-network
+          - net
             
     mongo-test:
         image: mongo:latest
@@ -25,7 +25,7 @@ services:
         volumes:
           - ./volumes/mongo-test/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
         networks:
-          - user-microservice-network
+          - net
       
     mongo-express:
         image: mongo-express
@@ -39,20 +39,8 @@ services:
         depends_on:
           - mongo
         networks:
-          - user-microservice-network
-        
-    user-microservice:
-        restart: on-failure
-        build: .
-        ports:
-          - "8091:8091"
-        environment:
-            SPRING_DATA_MONGODB_URI: mongodb://creativedriver:cr34t1v3dr1v3r@mongo:27017/user-microservice
-        depends_on:
-          - mongo
-        networks:
-          - user-microservice-network
+          - net
           
 networks:
-    user-microservice-network:
+    net:
         driver: bridge
