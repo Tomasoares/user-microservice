@@ -12,7 +12,7 @@ services:
         volumes:
           - ./volumes/mongo/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
         networks:
-          - lognet
+          - user-microservice-network
             
     mongo-test:
         image: mongo:latest
@@ -25,7 +25,7 @@ services:
         volumes:
           - ./volumes/mongo-test/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d/
         networks:
-          - lognet
+          - user-microservice-network
       
     mongo-express:
         image: mongo-express
@@ -39,7 +39,7 @@ services:
         depends_on:
           - mongo
         networks:
-          - lognet
+          - user-microservice-network
         
     user-microservice:
         restart: on-failure
@@ -51,8 +51,8 @@ services:
         depends_on:
           - mongo
         networks:
-          - lognet
+          - user-microservice-network
           
 networks:
-    lognet:
+    user-microservice-network:
         driver: bridge
