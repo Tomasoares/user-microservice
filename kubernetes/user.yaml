@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: client-node-port
+spec:
+    type: NodePort
+    ports:
+        - port: 8092
+          targetPort: 8091
+          nodePort: 31515
+    selector:
+        component: web        
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: user-microservice
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: web
+    template:
+        metadata:
+            labels:
+                component: web
+        spec:
+            containers:
+            - name: user-microservice
+              image: tomasoares/user-microservice
+              ports:
+                - containerPort: 8091

@@ -1,0 +1,8 @@
+FROM mongo:latest
+
+ENV MONGO_INITDB_ROOT_USERNAME=root
+ENV MONGO_INITDB_ROOT_PASSWORD=cr34t1v3dr1v3r
+ENV MONGO_INITDB_DATABASE=user-microservice
+EXPOSE 27017
+
+COPY ./volumes/mongo/docker-entrypoint-initdb.d/create-user.js docker-entrypoint-initdb.d/create-user.js
