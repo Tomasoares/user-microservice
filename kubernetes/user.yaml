@@ -3,9 +3,9 @@ kind: Service
 metadata:
     name: client-node-port
 spec:
-    type: NodePort
+    type: LoadBalancer
     ports:
-        - port: 8092
+        - port: 8091
           targetPort: 8091
           nodePort: 31515
     selector:

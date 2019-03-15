@@ -5,6 +5,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile.mongo
+        ports:
+          - "27017:27017"
         networks:
           - net
             
